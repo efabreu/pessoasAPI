@@ -1,0 +1,13 @@
+package com.estadiomineirao.manutencao;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class PessoasApiApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
