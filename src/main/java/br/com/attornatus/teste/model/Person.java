@@ -1,17 +1,21 @@
 package br.com.attornatus.teste.model;
 
 
+import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -26,12 +30,11 @@ public class Person {
 	
 	private String birthday;
 	
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
-	@JoinColumn(name = "ADDRESS_ID")
-	private Address address;
-
+	@OneToMany (cascade= {CascadeType.ALL, CascadeType.MERGE})
+	@JoinColumn(name= "ID_PERSON")
+	@Column(nullable = false)
+	private List<Address> addresses;
 	
-
 	public Long getId() {
 		return id;
 	}
@@ -73,14 +76,13 @@ public class Person {
 		this.birthday = birthday;
 	}
 
-	public Address getAddress() {
-		return address;
+	public List<Address> getAddresses() {
+		return addresses;
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
 	}
 	
 	
-
 }

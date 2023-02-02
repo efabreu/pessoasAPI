@@ -2,11 +2,12 @@ package br.com.attornatus.teste.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Address {
@@ -17,6 +18,8 @@ public class Address {
 	@JsonIgnore
     private Long id;
 	
+	private boolean mainAddress;
+	
 	private String street;
 	
 	private String number;
@@ -25,6 +28,9 @@ public class Address {
 	
 	private String city;
 	
+	@ManyToOne
+	@JoinColumn(name= "ID_PERSON")
+	private Person person;	
 
 
 	public Long getId() {
@@ -66,7 +72,33 @@ public class Address {
 	public void setCity(String city) {
 		this.city = city;
 	}
+	
+	public Long getIdPerson() {
+		return person.getId();
+	}
 
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	public boolean isMainAddress() {
+		return mainAddress;
+	}
+
+	public void setMainAddress(boolean mainAddress) {
+		this.mainAddress = mainAddress;
+	}
+	
+	public String getType() {
+		String type = "Endereço Secundário";
+		if(mainAddress) {
+			type = "Endereço Principal";
+		}
+		return type;
+	}
+
+	
+	
 	
 	
 	

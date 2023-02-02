@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.attornatus.teste.model.Address;
 import br.com.attornatus.teste.model.Person;
 import br.com.attornatus.teste.repository.AddressRepository;
 
@@ -16,10 +17,10 @@ public class AddressController {
 	@Autowired 
 	private AddressRepository addressRepository;
 	
-//	@RequestMapping (value = "/buscarTodosEnderecos", method = RequestMethod.GET)
-//	public List<Person> getAllPerson() {
-//		List<Person> listPerson = personRepository.findAll();
-//		return listPerson;
-//	}
+	@RequestMapping (value = "/buscarTodosEnderecos", method = RequestMethod.GET)
+	public List<Address> getAllPerson() {
+		List<Address> listAddress = addressRepository.findAll();
+		return listAddress;
+	}
 
 }
