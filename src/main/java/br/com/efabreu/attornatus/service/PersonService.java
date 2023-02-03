@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.efabreu.attornatus.dto.PersonDTO;
 import br.com.efabreu.attornatus.model.Person;
 import br.com.efabreu.attornatus.repository.AddressRepository;
 import br.com.efabreu.attornatus.repository.PersonRepository;
@@ -20,7 +21,7 @@ public class PersonService {
 	@Autowired
 	AddressRepository addressRepository;
 
-	public Optional<Person> getPerson(@RequestParam Long id) {
+	public Optional<Person> getPerson(Long id) {
 		return personRepository.findById(id);
 	}
 	
@@ -28,11 +29,13 @@ public class PersonService {
 		return personRepository.findAll();
 	}
 
-	public void newPerson(@RequestBody Person person) {
+	public void newPerson(PersonDTO personDTO) {
+		Person person = personDTO.toObject();
 		personRepository.save(person);
 	}
 	
-	public boolean updatePerson(@RequestBody Person personNew, @RequestParam Long id) {
+	public boolean updatePerson(PersonDTO personDTONew, Long id) {
+		Person personNew = personDTONew.toObject();
 		if (!personRepository.existsById(id)) {
 			return false;
 		};

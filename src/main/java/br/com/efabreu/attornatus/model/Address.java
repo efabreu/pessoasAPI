@@ -2,6 +2,7 @@ package br.com.efabreu.attornatus.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,12 +29,23 @@ public class Address {
 	
 	private String city;
 	
-	@ManyToOne
-	@JoinColumn(name= "ID_PERSON")
+	@ManyToOne (cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "ID_PERSON")
 	@JsonIgnore
 	private Person person;	
 	
 
+
+	public Address(boolean mainAddress, String street, String number, String zipcode, String city) {
+		this.mainAddress = mainAddress;
+		this.street = street;
+		this.number = number;
+		this.zipcode = zipcode;
+		this.city = city;
+	}
+	
+	public Address() {
+	}
 
 	public Long getId() {
 		return id;

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.efabreu.attornatus.dto.AddressDTO;
 import br.com.efabreu.attornatus.model.Address;
 import br.com.efabreu.attornatus.model.Person;
 import br.com.efabreu.attornatus.repository.AddressRepository;
@@ -20,7 +21,7 @@ public class AddressService {
 	@Autowired
 	AddressRepository addressRepository;
 
-	public List<Address> getAddressById(@RequestParam Long idPerson) {
+	public List<Address> getAddressById(Long idPerson) {
 		List<Address> addresses = addressRepository.getAddressesById(idPerson);
 		return addresses;
 	}
@@ -30,7 +31,7 @@ public class AddressService {
 		return listAddress;
 	}
 
-	public ResponseEntity<Object> newAddress(@RequestBody List<Address> addresses, @RequestParam Long idPerson) {
+	public ResponseEntity<Object> newAddress(List<Address> addresses, Long idPerson) {
 		Person person = new Person();
 		person.setId(idPerson);
 		addresses.forEach(address->address.setPerson(person));
@@ -38,7 +39,8 @@ public class AddressService {
 		return ResponseEntity.status(HttpStatus.OK).body(addresses);
 	}
 	
-	public List<Address> checkIfMainAddress(Long idPerson, Address address) {
+	public List<Address> checkIfMainAddress(Long idPerson, AddressDTO addressDTO) {
+		Address address = addressDTO.toObject();
 		Address oldMainAddress = addressRepository.getMainAddressById(idPerson, true);
 		List<Address> listAddress = new ArrayList<Address>();
 		if (oldMainAddress != null && address.isMainAddress()) {
@@ -58,12 +60,5 @@ public class AddressService {
 	public Address getMainAddressById (Long idPerson) {
 		return addressRepository.getMainAddressById(idPerson, true);
 	}
-	
-	
-	
-//	public void updatePerson(@RequestBody Address address, @RequestParam Long id) {
-//		addressRepository.update(address, id);
-//	}
-
 
 }

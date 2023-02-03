@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.efabreu.attornatus.dto.AddressDTO;
 import br.com.efabreu.attornatus.exceptions.PersonNotFoundExcepion;
 import br.com.efabreu.attornatus.model.Address;
 import br.com.efabreu.attornatus.service.AddressService;
@@ -53,9 +54,9 @@ public class AddressController {
 		@ApiResponse(code = HttpServletResponse.SC_BAD_REQUEST, message = "Campos de endereço invalidos.", response = Address.class),
 		@ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Exceção não tratada.")
 	})
-	public ResponseEntity<Object> salvarEndereco(@RequestBody Address address, @RequestParam Long idPerson, @RequestParam Boolean mainAddress) {
-		address.setMainAddress(mainAddress);
-		List<Address> listAddresses = addressService.checkIfMainAddress(idPerson, address);
+	public ResponseEntity<Object> salvarEndereco(@RequestBody AddressDTO addressDTO, @RequestParam Long idPerson, @RequestParam Boolean mainAddress) {
+		addressDTO.setMainAddress(mainAddress);
+		List<Address> listAddresses = addressService.checkIfMainAddress(idPerson, addressDTO);
 		return addressService.newAddress(listAddresses, idPerson);
 	}
 	

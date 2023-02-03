@@ -64,9 +64,7 @@ public class PersonController {
 		@ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Exceção não tratada.")
 	})
 	public ResponseEntity<String> criarPessoa(@RequestBody PersonDTO personDTO) {
-		
-		Person person = personDTO.toObject();
-		personService.newPerson(person);
+		personService.newPerson(personDTO);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body("Pessoa salva com sucesso.");
 	}
@@ -78,12 +76,12 @@ public class PersonController {
 		@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Pessoa não encontrada.", response = PersonNotFoundExcepion.class),
 		@ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Exceção não tratada.")
 	})
-	public ResponseEntity<Object> atualizarPessoa(@RequestBody Person person, @PathVariable Long id) {
-		if(!personService.updatePerson(person, id)) {
+	public ResponseEntity<Object> atualizarPessoa(@RequestBody PersonDTO personDTO, @PathVariable Long id) {
+		if(!personService.updatePerson(personDTO, id)) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		};
 		
-		return ResponseEntity.status(HttpStatus.OK).body(person);
+		return ResponseEntity.status(HttpStatus.OK).body(id);
 	}
 	
 	@DeleteMapping(value="/{id}")
