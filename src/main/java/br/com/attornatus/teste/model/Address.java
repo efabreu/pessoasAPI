@@ -30,7 +30,9 @@ public class Address {
 	
 	@ManyToOne
 	@JoinColumn(name= "ID_PERSON")
+	@JsonIgnore
 	private Person person;	
+	
 
 
 	public Long getId() {
@@ -88,19 +90,6 @@ public class Address {
 	public void setMainAddress(boolean mainAddress) {
 		this.mainAddress = mainAddress;
 	}
-	
-	public String getType() {
-		String type = "Endereço Secundário";
-		if(mainAddress) {
-			type = "Endereço Principal";
-		}
-		return type;
-	}
-
-	
-	
-	
-	
 	
 
 }
