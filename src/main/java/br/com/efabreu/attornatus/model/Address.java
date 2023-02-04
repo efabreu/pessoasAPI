@@ -36,12 +36,12 @@ public class Address {
 	
 
 
-	public Address(boolean mainAddress, String street, String number, String zipcode, String city) {
-		this.mainAddress = mainAddress;
+	public Address(String street, String number, String zipcode, String city) {
 		this.street = street;
 		this.number = number;
 		this.zipcode = zipcode;
 		this.city = city;
+		this.mainAddress = false;
 	}
 	
 	public Address() {

@@ -24,7 +24,7 @@ public class Person {
 	
 	private String birthday;
 	
-	@OneToMany 
+	@OneToMany (orphanRemoval = true)
 	@JoinColumn(name= "ID_PERSON")
 	@Column(nullable = false)
 	private List<Address> addresses;

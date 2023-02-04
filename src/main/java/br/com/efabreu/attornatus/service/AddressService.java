@@ -39,8 +39,9 @@ public class AddressService {
 		return ResponseEntity.status(HttpStatus.OK).body(addresses);
 	}
 	
-	public List<Address> checkIfMainAddress(Long idPerson, AddressDTO addressDTO) {
+	public List<Address> checkIfMainAddress(Long idPerson, AddressDTO addressDTO, Boolean mainAddress) {
 		Address address = addressDTO.toObject();
+		address.setMainAddress(mainAddress);
 		Address oldMainAddress = addressRepository.getMainAddressById(idPerson, true);
 		List<Address> listAddress = new ArrayList<Address>();
 		if (oldMainAddress != null && address.isMainAddress()) {

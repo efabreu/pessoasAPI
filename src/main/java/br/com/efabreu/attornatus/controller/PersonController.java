@@ -1,8 +1,6 @@
 package br.com.efabreu.attornatus.controller;
 
 import java.util.List;
-import java.util.Objects;
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +34,13 @@ public class PersonController {
 	@GetMapping (value = "/{id}")
 	@ApiOperation(value = "Buscar pessoa.")
 	@ApiResponses({
-		@ApiResponse(code = HttpServletResponse.SC_OK, message = "Pessoa encontrada.", response = Person.class),
+		@ApiResponse(code = HttpServletResponse.SC_OK, message = "Pessoa encontrada.", response = ResponseEntity.class),
 		@ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "Pessoa não encontrada.", response = PersonNotFoundExcepion.class),
 		@ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Exceção não tratada.")
 	})
 	public ResponseEntity<?> buscarPessoaPorId(@RequestParam Long id) {
-		Person person = personService.getPerson(id).orElse(null);
-		return Objects.isNull(person)? ResponseEntity.notFound().build() : ResponseEntity.ok(person);
+		Person person = personService.getPerson(id);
+		return ResponseEntity.ok(person);
 	}
 	
 	@GetMapping (value = "/")
@@ -64,7 +62,7 @@ public class PersonController {
 		@ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Exceção não tratada.")
 	})
 	public ResponseEntity<String> criarPessoa(@RequestBody PersonDTO personDTO) {
-		personService.newPerson(personDTO);
+		personService.create(personDTO);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body("Pessoa salva com sucesso.");
 	}
@@ -77,7 +75,7 @@ public class PersonController {
 		@ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Exceção não tratada.")
 	})
 	public ResponseEntity<Object> atualizarPessoa(@RequestBody PersonDTO personDTO, @PathVariable Long id) {
-		if(!personService.updatePerson(personDTO, id)) {
+		if(!personService.update(personDTO, id)) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		};
 		

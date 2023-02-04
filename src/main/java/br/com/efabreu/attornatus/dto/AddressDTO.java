@@ -4,8 +4,6 @@ import br.com.efabreu.attornatus.model.Address;
 
 public class AddressDTO {
 	
-	private boolean mainAddress;
-	
 	private String street;
 	
 	private String number;
@@ -13,20 +11,6 @@ public class AddressDTO {
 	private String zipcode;
 	
 	private String city;
-
-	
-	
-	public boolean isMainAddress() {
-		return mainAddress;
-	}
-
-
-
-	public void setMainAddress(boolean mainAddress) {
-		this.mainAddress = mainAddress;
-	}
-
-
 
 	public String getStreet() {
 		return street;
@@ -77,7 +61,7 @@ public class AddressDTO {
 
 
 	public Address toObject() {
-		return new Address (mainAddress, street, number, zipcode, city);
+		return new Address (street, number, zipcode, city);
 	}
 	
 }

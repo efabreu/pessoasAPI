@@ -8,6 +8,11 @@ public class PersonDTO {
 	
 	private String birthday;
 
+	public PersonDTO(String name, String birthday) {
+		this.name = name;
+		this.birthday = birthday;
+	}
+
 	public String getName() {
 		return name;
 	}

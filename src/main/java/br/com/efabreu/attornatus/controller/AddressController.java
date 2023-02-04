@@ -55,8 +55,7 @@ public class AddressController {
 		@ApiResponse(code = HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message = "Exceção não tratada.")
 	})
 	public ResponseEntity<Object> salvarEndereco(@RequestBody AddressDTO addressDTO, @RequestParam Long idPerson, @RequestParam Boolean mainAddress) {
-		addressDTO.setMainAddress(mainAddress);
-		List<Address> listAddresses = addressService.checkIfMainAddress(idPerson, addressDTO);
+		List<Address> listAddresses = addressService.checkIfMainAddress(idPerson, addressDTO, mainAddress);
 		return addressService.newAddress(listAddresses, idPerson);
 	}
 	
